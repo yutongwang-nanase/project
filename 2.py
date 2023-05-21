@@ -9,99 +9,245 @@ from dash.dependencies import Input, Output
 
 data = {
     'Kvrh': {
-        'CGCNN': 0.048,
-        'DimeNet': 0.06458061,
-        'MEGNet': 0.06817374082073885
+        'CGCNN': 0.068,
+        'DimeNet': 0.064,
+        'MEGNet': 0.068
     },
     'jdft2d': {
-        'CGCNN': 30.101,
-        'DimeNet': 57.779957,
-        'MEGNet': 53.224194433218166
+        'CGCNN': 54.873,
+        'DimeNet': 57.779,
+        'MEGNet': 53.224
     },
     'dielectric': {
-        'CGCNN': 0.261,
-        'DimeNet': 0.3668,
-        'MEGNet': 0.349344458
+        'CGCNN': 0.632,
+        'DimeNet': 0.366,
+        'MEGNet': 0.349
     },
-    'gvrh': {
+    'Gvrh': {
         'CGCNN': 0.057,
-        'DimeNet': 0.0856,
-        'MEGNet': 0.094580340932
+        'DimeNet': 0.085,
+        'MEGNet': 0.094
     },
-    # 'mp_e_form': {
-    #     'CGCNN': 0.034,
-    #     'DimeNet': 0.0000,
-    #     'MEGNet': 0
-    # },
+    'mp_e_form': {
+        'CGCNN': 0.034,
+        'DimeNet': 0.023,
+        'MEGNet': 0.024
+    },
     'mp_gap': {
         'CGCNN': 0.211,
-        'DimeNet': 0.2520,
-        'MEGNet': 0.2015
+        'DimeNet': 0.252,
+        'MEGNet': 0.201
     },
-    # 'mp_is_metal': {
-    #     'CGCNN': 1,
-    #     'DimeNet': 1,
-    #     'MEGNet': 0
-    # },
+    'mp_is_metal': {
+        'CGCNN': 0.948,
+        'DimeNet': 0.900,
+        'MEGNet': 0.903
+    },
     'perovskites': {
         'CGCNN': 0.039,
-        'DimeNet': 0.0427,
-        'MEGNet': 0.059661779
+        'DimeNet': 0.042,
+        'MEGNet': 0.059
     },
     'phonons': {
         'CGCNN': 36.299,
-        'DimeNet': 44.5311,
-        'MEGNet': 36.29363321159584
+        'DimeNet': 44.531,
+        'MEGNet': 36.293
     },
 
+}
+matbench_data = {
+    'Task name': [
+        'matbench_steels',
+        'matbench_jdft2d',
+        'matbench_phonons',
+        'matbench_expt_gap',
+        'matbench_dielectric',
+        'matbench_expt_is_metal',
+        'matbench_glass',
+        'matbench_log_gvrh',
+        'matbench_log_kvrh',
+        'matbench_perovskites',
+        'matbench_mp_gap',
+        'matbench_mp_is_metal',
+        'matbench_mp_e_form'
+    ],
+    'Samples': [
+        312,
+        636,
+        1265,
+        4604,
+        4764,
+        4921,
+        5680,
+        10987,
+        10987,
+        18928,
+        106113,
+        106113,
+        132752
+    ],
+    'Algorithm': [
+        'MODNet (v0.1.12)',
+        'MODNet (v0.1.12)',
+        'MegNet (kgcnn v2.1.0)',
+        'MODNet (v0.1.12)',
+        'MODNet (v0.1.12)',
+        'AMMExpress v2020',
+        'MODNet (v0.1.12)',
+        'coGN',
+        'coGN',
+        'coGN',
+        'coGN',
+        'CGCNN v2019',
+        'coGN'
+    ],
+    'Verified MAE (unit) or ROCAUC': [
+        '87.7627 (MPa)',
+        '33.1918 (meV/atom)',
+        '28.7606 (cm^-1)',
+        '0.3327 (eV)',
+        '0.2711 (unitless)',
+        '0.9209',
+        '0.9603',
+        '0.0689 (log10(GPa))',
+        '0.0535 (log10(GPa))',
+        '0.0269 (eV/unit cell)',
+        '0.1559 (eV)',
+        '0.9520',
+        '0.0170 (eV/atom)'
+    ]
 }
 official_data = {
     'Kvrh': {
         'CGCNN': 0.0712,
-        'DimeNet': 0.0666,
+        'DimeNet': 0.0572,
         'MEGNet': 0.0668
     },
     'jdft2d': {
         'CGCNN': 49.2440,
-        'DimeNet': 44.846,
+        'DimeNet': 49.0243,
         'MEGNet': 54.1719
     },
     'dielectric': {
         'CGCNN': 0.5988,
-        'DimeNet': 0.344,
-        'MEGNet': 0.349344458
+        'DimeNet': 0.3400,
+        'MEGNet': 0.3391
     },
-    'gvrh': {
-        'CGCNN': 0.057,
-        'DimeNet': 0.0900,
+    'Gvrh': {
+        'CGCNN': 0.0895,
+        'DimeNet': 0.0792,
         'MEGNet': 0.0871
     },
-    # 'mp_e_form': {
-    #     'CGCNN': 0.0337,
-    #     'DimeNet': 0.0000,
-    #     'MEGNet': 0.0252
-    # },
+    'mp_e_form': {
+        'CGCNN': 0.0337,
+        'DimeNet': 0.0235,
+        'MEGNet': 0.0252
+    },
     'mp_gap': {
         'CGCNN': 0.2972,
-        'DimeNet': 0.2520,
+        'DimeNet': 0.1993,
         'MEGNet': 0.1934
     },
-    # 'mp_is_metal': {
-    #     'CGCNN': 1,
-    #     'DimeNet': 1,
-    #     'MEGNet': 0
-    # },
+    'mp_is_metal': {
+        'CGCNN': 0.9520,
+        'DimeNet': 0.9021,
+        'MEGNet': 0.9032
+    },
     'perovskites': {
         'CGCNN': 0.0452,
-        'DimeNet': 0.0437,
+        'DimeNet': 0.0376,
         'MEGNet': 0.0352
     },
     'phonons': {
         'CGCNN': 57.7635,
-        'DimeNet': 51.074,
+        'DimeNet': 37.4619,
         'MEGNet': 28.7606
     },
 }
+matbench_dielectric_data = {
+    'algorithm': [
+        'MODNet (v0.1.12)',
+        'MODNet (v0.1.10)',
+        'coGN',
+        'AMMExpress v2020',
+        'Finder_v1.2 structure-based version',
+        'Finder_v1.2 composition-only version',
+        'CrabNet',
+        'SchNet (kgcnn v2.1.0)',
+        'MegNet (kgcnn v2.1.0)',
+        'DimeNet++ (kgcnn v2.1.0)',
+        'ALIGNN',
+        'RF-SCM/Magpie',
+        'CGCNN v2019',
+        'Dummy'
+    ],
+    'mean mae': [
+        0.2711,
+        0.2970,
+        0.3088,
+        0.3150,
+        0.3197,
+        0.3204,
+        0.3234,
+        0.3277,
+        0.3391,
+        0.3400,
+        0.3449,
+        0.4196,
+        0.5988,
+        0.8088
+    ],
+    'std mae': [
+        0.0714,
+        0.0720,
+        0.0859,
+        0.0672,
+        0.0717,
+        0.0811,
+        0.0714,
+        0.0829,
+        0.0745,
+        0.0570,
+        0.0871,
+        0.0750,
+        0.0833,
+        0.0718
+    ],
+    'mean rmse': [
+        1.6832,
+        1.7185,
+        2.0546,
+        1.7202,
+        1.7213,
+        1.7189,
+        1.7288,
+        1.8990,
+        1.9871,
+        1.9936,
+        1.9651,
+        1.8538,
+        1.8976,
+        1.9728
+    ],
+    'max max_error': [
+        59.1179,
+        58.9519,
+        58.7728,
+        59.0112,
+        59.0606,
+        59.0528,
+        59.1583,
+        58.6071,
+        59.3095,
+        58.5416,
+        58.7285,
+        59.1201,
+        58.9996,
+        59.6653
+    ]
+}
+
+df_matbench_dielectric = pd.DataFrame(matbench_dielectric_data)
 df_A = pd.read_csv('cgcnn_log_kvrh.csv')
 df_B = pd.read_csv('test_results.csv')
 df_die = pd.read_csv('picture2/cgcnn_dielectric.csv')
@@ -116,7 +262,10 @@ df_D = pd.read_csv('megnet_dielectric.csv')
 df_E = pd.read_csv('megnet_gvrh.csv')
 df_F = pd.read_csv('megnet_phonons.csv')
 df_G = pd.read_csv('megnet_perovskites.csv')
-
+df_H = pd.read_csv('megnet_jdft2d.csv')
+df_I = pd.read_csv('megnet_mp_e_form.csv')
+df_J = pd.read_csv('megnet_mp_gap.csv')
+df_matbench = pd.DataFrame(matbench_data)
 df = pd.DataFrame({
     'Task name': ['matbench_steels', 'matbench_jdft2d', 'matbench_phonons', 'matbench_expt_gap', 'matbench_dielectric',
                   'matbench_expt_is_metal', 'matbench_glass', 'matbench_log_gvrh', 'matbench_log_kvrh',
@@ -140,7 +289,8 @@ df = pd.DataFrame({
     'Submissions': [9, 14, 14, 11, 14, 6, 6, 14, 14, 14, 14, 11, 16],
     'Task description': ['Predict the yield strength of steel alloys based on their composition',
                          'Predict the exfoliation energy of 2D materials based on their structure',
-                         'Predict the frequency of the last peak in the phonon density of states of materials based on their structure',
+                         'Predict the frequency of the last peak in the phonon density of states of materials based '
+                         'on their structure',
                          'Predict the experimental band gap of inorganic compounds based on their composition',
                          'Predict the refractive index of materials based on their structure',
                          'Classify inorganic compounds as metals or non-metals based on their composition',
@@ -291,7 +441,6 @@ app1.layout = html.Div(children=[
         html.Div([
             html.H1('Download', style={
                 'color': 'white',
-
             }),
             html.Br(),
             html.A('下载matbench steels数据集', href="https://ml.materialsproject.org/projects/matbench_steels.json.gz",
@@ -553,7 +702,7 @@ app1.layout = html.Div(children=[
 
             html.Div([
                 html.H1('Matbench 数据可视化分析', id='dataset', style={'color': '#FFE5CC'}),
-# 描述
+                # 描述
                 html.Div(children='''Matbench Dataset Visualization''',
                          style={'color': '#FFE5CC'}),
                 html.Table([
@@ -573,9 +722,9 @@ app1.layout = html.Div(children=[
             html.Br(),
             html.Br(),
             html.H1('比赛成绩', id='score', style={'color': '#FFE5CC'}),
-# 描述
-                html.Div(children='''Comparison of grades in the dataset''',
-                         style={'color': '#FFE5CC'}),
+            # 描述
+            html.Div(children='''Comparison of grades in the dataset''',
+                     style={'color': '#FFE5CC'}),
             dcc.Graph(
                 id='score-graph',
                 figure=go.Figure(
@@ -622,8 +771,6 @@ app1.layout = html.Div(children=[
                         {'label': 'mp_gap', 'value': 'mp_gap'},
                         {'label': 'perovskites', 'value': 'perovskites'},
                         {'label': 'phonons', 'value': 'phonons'},
-                        # {'label': 'jdft2d', 'value': 'jdft2d'},
-                        # {'label': 'jdft2d', 'value': 'jdft2d'},
                     ],
                     value='Kvrh'
                 ),
@@ -659,7 +806,7 @@ app1.layout = html.Div(children=[
                 html.Br(),
                 html.Br(),
                 html.H1("CGCNN 预测值和真实值的曲线", id='line', style={'color': '#FFE5CC'}),
-# 描述
+                # 描述
                 html.Div(children='''Curve of CGCNN predicted value and true value''',
                          style={'color': '#FFE5CC'}),
                 # 选择项目的 Dropdown 组件
@@ -680,21 +827,6 @@ app1.layout = html.Div(children=[
                 ),
                 # 折线图
                 dcc.Graph(id='line-chart'),
-                # dcc.Dropdown(
-                #     id='project-dropdown',
-                #     options=[
-                #         {'label': 'kvrh', 'value': 'A'},
-                #         {'label': 'jdft2d', 'value': 'B'},
-                #         {'label': 'gvrh', 'value': 'C'},
-                #         {'label': 'gap', 'value': 'D'},
-                #         {'label': 'dielectric', 'value': 'E'},
-                #         {'label': 'phonons', 'value': 'F'},
-                #         {'label': 'perovskites', 'value': 'G'},
-                #         {'label': 'e_form', 'value': 'H'},
-                #     ],
-                #     value='A',
-                #     style = {'display': 'none'}
-                # ),
                 dcc.Graph(id='scatter-plot')
             ]),
             html.Br(),
@@ -707,17 +839,20 @@ app1.layout = html.Div(children=[
             html.Br(),
             html.Br(),
             html.H1(children='Megnet 数据箱型图', id='box', style={'color': '#FFE5CC'}),
-# 描述
-                html.Div(children='''MEGNet Box Plot''',
-                         style={'color': '#FFE5CC'}),
+            # 描述
+            html.Div(children='''MEGNet Box Plot''',
+                     style={'color': '#FFE5CC'}),
             dcc.Dropdown(
                 id='data-dropdown',
                 options=[
-                    {'label': 'KVRH Data', 'value': 'C'},
+                    {'label': 'Kvrh Data', 'value': 'C'},
                     {'label': 'Dielectric Data', 'value': 'D'},
-                    {'label': 'GVRH Data', 'value': 'E'},
+                    {'label': 'Gvrh Data', 'value': 'E'},
                     {'label': 'Phonons Data', 'value': 'F'},
-                    {'label': 'Perovskites Data', 'value': 'G'}
+                    {'label': 'Perovskites Data', 'value': 'G'},
+                    {'label': 'Jdft2d Data', 'value': 'H'},
+                    {'label': 'Gap Data', 'value': 'J'},
+                    {'label': 'E_form Data', 'value': 'I'},
                 ],
                 value='C'
             ),
@@ -725,10 +860,10 @@ app1.layout = html.Div(children=[
                 id='box-plot',
                 figure={
                     'data': [
-                        {'y': df_C[col], 'type': 'box', 'name': col} for col in ['mae', 'mape', 'rmse']
+                        {'y': df_C[col], 'type': 'box', 'name': col} for col in ['MAE', 'MAPE', 'RMSE']
                     ],
                     'layout': {
-                        'title': 'Box Plot of mae, mape, and rmse values',
+                        'title': 'Box Plot of MAE, MAPE, and RMSE values',
                         'yaxis': {'title': 'Values'}
                     }
                 }
@@ -828,8 +963,66 @@ app2.layout = html.Div(children=[
 
 # 创建第三个Dash应用程序的布局
 app3 = dash.Dash(__name__)
-app3.layout = html.Div([
-    html.H1('App 3'),
+app3.layout = html.Div(children=[
+    html.Div(children=[
+        html.H1('matbench排行榜', style={'color': '#FFCC99'}),
+        dcc.Graph(
+            id='matbench-table',
+            figure={
+                'data': [
+                    {'type': 'table',
+                     'header': dict(values=df_matbench.columns,
+                                    fill=dict(color='#808080'),
+                                    font=dict(color='#FFCC99', size=24),
+                                    line=dict(color='white', width=1),
+                                    height=30),
+
+                     'cells': dict(values=df_matbench.transpose().values.tolist(),
+                                   fill=dict(color='#808080'),
+                                   font=dict(color='#FFFFFF', size=20),
+                                   line=dict(color='white', width=1),
+                                   height=40
+                                   )}
+                ],
+                'layout': {
+                    'height': '800',  # 调整表格的高度
+                    'paper_bgcolor': '#404040',  # 更改背景颜色
+                },
+                'style': {
+                    'backgroundColor': '#404040',  # 设置背景颜色
+                }
+            }
+        ),
+        html.Br(),
+        html.H1('matbench_deilectric的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        dcc.Graph(
+            id='matbench-table',
+            figure={
+                'data': [
+                    {'type': 'table',
+                     'header': dict(values=df_matbench_dielectric.columns,
+                                    fill=dict(color='#808080'),
+                                    font=dict(color='#FFCC99', size=20),
+                                    line=dict(color='#FFFFFF', width=1)),  # 添加表头边框样式
+                     'cells': dict(values=df_matbench_dielectric.transpose().values.tolist(),
+                                   fill=dict(color='#808080'),
+                                   font=dict(color='#FFFFFF', size=16),
+                                   line=dict(color='#FFFFFF', width=1),
+                                   height=30
+                                   )}  # 添加单元格边框样式
+                ],
+                'layout': {
+                    'height': '800',  # 调整表格的高度
+                    'paper_bgcolor': '#404040',  # 更改背景颜色
+                },
+                'style': {
+                    'backgroundColor': '#404040',  # 设置背景颜色
+                }
+            }
+        )
+
+    ], style={'background-color': '#404040', 'height': '2000px'}),
+
     # App 3的其他组件
 ])
 # 创建主应用程序的布局，并将两个子应用程序的布局组合在一起
@@ -1003,14 +1196,20 @@ def update_figure(selected_data):
         data = df_E
     elif selected_data == 'F':
         data = df_F
+    elif selected_data == 'H':
+        data = df_H
+    elif selected_data == 'I':
+        data = df_I
+    elif selected_data == 'J':
+        data = df_J
     else:
         data = df_G
     return {
         'data': [
-            {'y': data[col], 'type': 'box', 'name': col} for col in ['mae', 'mape', 'rmse']
+            {'y': data[col], 'type': 'box', 'name': col} for col in ['MAE', 'MAPE', 'RMSE']
         ],
         'layout': {
-            'title': 'Box Plot of mae, mape, and rmse values ',
+            'title': 'MAE, MAPE and RMSE ',
             # for ' + selected_data + ' Data'
             'yaxis': {'title': 'Values'}
         }
@@ -1047,7 +1246,23 @@ def update_data_description(selected_data):
     [dash.dependencies.Input('model-dropdown', 'value'),
      dash.dependencies.Input('task-dropdown', 'value')])
 def update_figure(selected_model, selected_task):
-    return create_figure(selected_model, selected_task)
+    figure = create_figure(selected_model, selected_task)
+
+    # 获取柱状图的数据
+    data = figure['data'][0]
+    data1 = figure['data'][1]
+    # 获取柱子的高度
+    y_values = data['y']
+    y_values2 = data1['y']
+
+    # 在柱子的中间位置添加文本标签
+    text_labels = [str(y) for y in y_values]
+    text_labels2 = [str(y) for y in y_values2]
+    data['text'] = text_labels
+    data1['text'] = text_labels2
+    data['textposition'] = 'auto'
+
+    return figure
 
 
 # 回调函数根据选择的选项卡显示相应的子应用程序界面
