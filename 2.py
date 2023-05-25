@@ -8,246 +8,386 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 
 data = {
-    'Kvrh': {
-        'CGCNN': 0.068,
-        'DimeNet': 0.064,
-        'MEGNet': 0.068
-    },
-    'jdft2d': {
-        'CGCNN': 54.873,
-        'DimeNet': 57.779,
-        'MEGNet': 53.224
-    },
-    'dielectric': {
-        'CGCNN': 0.632,
-        'DimeNet': 0.366,
-        'MEGNet': 0.349
-    },
-    'Gvrh': {
-        'CGCNN': 0.057,
-        'DimeNet': 0.085,
-        'MEGNet': 0.094
-    },
-    'mp_e_form': {
-        'CGCNN': 0.034,
-        'DimeNet': 0.023,
-        'MEGNet': 0.024
-    },
-    'mp_gap': {
-        'CGCNN': 0.211,
-        'DimeNet': 0.252,
-        'MEGNet': 0.201
-    },
-    'mp_is_metal': {
-        'CGCNN': 0.948,
-        'DimeNet': 0.900,
-        'MEGNet': 0.903
-    },
-    'perovskites': {
-        'CGCNN': 0.039,
-        'DimeNet': 0.042,
-        'MEGNet': 0.059
-    },
-    'phonons': {
-        'CGCNN': 36.299,
-        'DimeNet': 44.531,
-        'MEGNet': 36.293
-    },
+    'Kvrh': {'CGCNN': 0.068, 'DimeNet': 0.064, 'MEGNet': 0.068},
+    'jdft2d': {'CGCNN': 54.873, 'DimeNet': 57.779, 'MEGNet': 53.224},
+    'dielectric': {'CGCNN': 0.632, 'DimeNet': 0.366, 'MEGNet': 0.349},
+    'Gvrh': {'CGCNN': 0.057, 'DimeNet': 0.085, 'MEGNet': 0.094},
+    'mp_e_form': {'CGCNN': 0.034, 'DimeNet': 0.023, 'MEGNet': 0.024},
+    'mp_gap': {'CGCNN': 0.211, 'DimeNet': 0.252, 'MEGNet': 0.201},
+    'perovskites': {'CGCNN': 0.039, 'DimeNet': 0.042, 'MEGNet': 0.059},
+    'phonons': {'CGCNN': 36.299, 'DimeNet': 44.531, 'MEGNet': 36.293},
 
 }
+
 matbench_data = {
     'Task name': [
-        'matbench_steels',
-        'matbench_jdft2d',
-        'matbench_phonons',
-        'matbench_expt_gap',
-        'matbench_dielectric',
-        'matbench_expt_is_metal',
-        'matbench_glass',
-        'matbench_log_gvrh',
-        'matbench_log_kvrh',
-        'matbench_perovskites',
-        'matbench_mp_gap',
-        'matbench_mp_is_metal',
-        'matbench_mp_e_form'
+        'matbench_steels', 'matbench_jdft2d', 'matbench_phonons',
+        'matbench_expt_gap', 'matbench_dielectric', 'matbench_expt_is_metal', 'matbench_glass',
+        'matbench_log_gvrh', 'matbench_log_kvrh', 'matbench_perovskites',
+        'matbench_mp_gap', 'matbench_mp_is_metal', 'matbench_mp_e_form'
     ],
     'Samples': [
-        312,
-        636,
-        1265,
-        4604,
-        4764,
-        4921,
-        5680,
-        10987,
-        10987,
-        18928,
-        106113,
-        106113,
-        132752
+        312, 636, 1265, 4604, 4764, 4921, 5680, 10987,
+        10987, 18928, 106113, 106113, 132752
     ],
     'Algorithm': [
-        'MODNet (v0.1.12)',
-        'MODNet (v0.1.12)',
-        'MegNet (kgcnn v2.1.0)',
-        'MODNet (v0.1.12)',
-        'MODNet (v0.1.12)',
-        'AMMExpress v2020',
-        'MODNet (v0.1.12)',
-        'coGN',
-        'coGN',
-        'coGN',
-        'coGN',
-        'CGCNN v2019',
-        'coGN'
+        'MODNet (v0.1.12)', 'MODNet (v0.1.12)', 'MegNet (kgcnn v2.1.0)', 'MODNet (v0.1.12)',
+        'MODNet (v0.1.12)', 'AMMExpress v2020', 'MODNet (v0.1.12)', 'coGN',
+        'coGN', 'coGN', 'coGN', 'CGCNN v2019', 'coGN'
     ],
     'Verified MAE (unit) or ROCAUC': [
-        '87.7627 (MPa)',
-        '33.1918 (meV/atom)',
-        '28.7606 (cm^-1)',
-        '0.3327 (eV)',
-        '0.2711 (unitless)',
-        '0.9209',
-        '0.9603',
-        '0.0689 (log10(GPa))',
-        '0.0535 (log10(GPa))',
-        '0.0269 (eV/unit cell)',
-        '0.1559 (eV)',
-        '0.9520',
+        '87.7627 (MPa)', '33.1918 (meV/atom)', '28.7606 (cm^-1)',
+        '0.3327 (eV)', '0.2711 (unitless)', '0.9209', '0.9603',
+        '0.0689 (log10(GPa))', '0.0535 (log10(GPa))',
+        '0.0269 (eV/unit cell)', '0.1559 (eV)', '0.9520',
         '0.0170 (eV/atom)'
     ]
 }
 official_data = {
-    'Kvrh': {
-        'CGCNN': 0.0712,
-        'DimeNet': 0.0572,
-        'MEGNet': 0.0668
-    },
-    'jdft2d': {
-        'CGCNN': 49.2440,
-        'DimeNet': 49.0243,
-        'MEGNet': 54.1719
-    },
-    'dielectric': {
-        'CGCNN': 0.5988,
-        'DimeNet': 0.3400,
-        'MEGNet': 0.3391
-    },
-    'Gvrh': {
-        'CGCNN': 0.0895,
-        'DimeNet': 0.0792,
-        'MEGNet': 0.0871
-    },
-    'mp_e_form': {
-        'CGCNN': 0.0337,
-        'DimeNet': 0.0235,
-        'MEGNet': 0.0252
-    },
-    'mp_gap': {
-        'CGCNN': 0.2972,
-        'DimeNet': 0.1993,
-        'MEGNet': 0.1934
-    },
-    'mp_is_metal': {
-        'CGCNN': 0.9520,
-        'DimeNet': 0.9021,
-        'MEGNet': 0.9032
-    },
-    'perovskites': {
-        'CGCNN': 0.0452,
-        'DimeNet': 0.0376,
-        'MEGNet': 0.0352
-    },
-    'phonons': {
-        'CGCNN': 57.7635,
-        'DimeNet': 37.4619,
-        'MEGNet': 28.7606
-    },
+    'Kvrh': {'CGCNN': 0.0712, 'DimeNet': 0.0572, 'MEGNet': 0.0668},
+    'jdft2d': {'CGCNN': 49.2440, 'DimeNet': 49.0243, 'MEGNet': 54.1719},
+    'dielectric': {'CGCNN': 0.5988, 'DimeNet': 0.3400, 'MEGNet': 0.3391},
+    'Gvrh': {'CGCNN': 0.0895, 'DimeNet': 0.0792, 'MEGNet': 0.0871},
+    'mp_e_form': {'CGCNN': 0.0337, 'DimeNet': 0.0235, 'MEGNet': 0.0252},
+    'mp_gap': {'CGCNN': 0.2972, 'DimeNet': 0.1993, 'MEGNet': 0.1934},
+    'mp_is_metal': {'CGCNN': 0.9520, 'DimeNet': 0.9021, 'MEGNet': 0.9032},
+    'perovskites': {'CGCNN': 0.0452, 'DimeNet': 0.0376, 'MEGNet': 0.0352},
+    'phonons': {'CGCNN': 57.7635, 'DimeNet': 37.4619, 'MEGNet': 28.7606},
 }
 matbench_dielectric_data = {
+    'algorithm': [
+        'MODNet (v0.1.12)', 'MODNet (v0.1.10)', 'coGN', 'AMMExpress v2020', 'Finder_v1.2 structure-based version',
+        'Finder_v1.2 composition-only version', 'CrabNet', 'SchNet (kgcnn v2.1.0)', 'MegNet (kgcnn v2.1.0)',
+        'DimeNet++ (kgcnn v2.1.0)', 'ALIGNN', 'RF-SCM/Magpie', 'CGCNN v2019', 'Dummy'
+    ],
+    'mean mae': [
+        0.2711, 0.2970, 0.3088, 0.3150, 0.3197, 0.3204, 0.3234, 0.3277, 0.3391, 0.3400, 0.3449, 0.4196, 0.5988, 0.8088
+    ],
+    'std mae': [
+        0.0714, 0.0720, 0.0859, 0.0672, 0.0717, 0.0811, 0.0714, 0.0829, 0.0745, 0.0570, 0.0871, 0.0750, 0.0833, 0.0718
+    ],
+    'mean rmse': [
+        1.6832, 1.7185, 2.0546, 1.7202, 1.7213, 1.7189, 1.7288, 1.8990, 1.9871, 1.9936, 1.9651, 1.8538, 1.8976, 1.9728
+    ],
+    'max max_error': [
+        59.1179, 58.9519, 58.7728, 59.0112, 59.0606, 59.0528, 59.1583, 58.6071, 59.3095, 58.5416, 58.7285, 59.1201,
+        58.9996, 59.6653
+    ]
+}
+matbench_expt_gap_data = {
+    'algorithm': [
+        'Ax/SAASBO CrabNet v1.2.7',
+        'MODNet (v0.1.12)',
+        'CrabNet',
+        'MODNet (v0.1.10)',
+        'Ax+CrabNet v1.2.1',
+        'Ax(10/90)+CrabNet v1.2.7',
+        'CrabNet v1.2.1',
+        'AMMExpress v2020',
+        'RF-SCM/Magpie',
+        'gptchem',
+        'Dummy'
+    ],
+    'mean mae': [
+        0.3310, 0.3327, 0.3463, 0.3470, 0.3566, 0.3632, 0.3757, 0.4161, 0.4461, 0.4544, 1.1435
+    ],
+    'std mae': [
+        0.0071, 0.0239, 0.0088, 0.0222, 0.0248, 0.0196, 0.0207, 0.0194, 0.0177, 0.0123, 0.0310
+    ],
+    'mean rmse': [
+        0.8123, 0.7685, 0.8504, 0.7437, 0.8673, 0.8679, 0.8805, 0.9918, 0.8243, 1.0737, 1.4438
+    ],
+    'max max_error': [
+        11.1001, 9.8955, 9.8002, 9.8567, 11.0998, 11.1003, 10.2572, 12.7533, 9.5428, 11.7000, 10.7354
+    ]
+}
+matbench_expt_is_metal_data = {
+    'algorithm': [
+        'AMMExpress v2020', 'RF-SCM/Magpie', 'MODNet (v0.1.10)', 'MODNet (v0.1.12)',
+        'gptchem', 'Dummy'
+    ],
+    'mean rocauc': [
+        0.9209, 0.9167, 0.9161, 0.9161, 0.8965, 0.4924
+    ],
+    'std rocauc': [
+        0.0028, 0.0064, 0.0072, 0.0072, 0.0060, 0.0128
+    ],
+    'mean f1': [
+        0.9200, 0.9159, 0.9153, 0.9153, 0.8953, 0.4913
+    ],
+    'mean balanced_accuracy': [
+        0.9209, 0.9167, 0.9161, 0.9161, 0.8965, 0.4924
+    ]
+}
+matbench_glass_data = {
+    'algorithm': [
+        'MODNet (v0.1.12)',
+        'AMMExpress v2020',
+        'RF-SCM/Magpie',
+        'MODNet (v0.1.10)',
+        'gptchem',
+        'Dummy'
+    ],
+    'mean rocauc': [
+        0.9603, 0.8607, 0.8587, 0.8107, 0.7762, 0.5005
+    ],
+    'std rocauc': [
+        0.0075, 0.0199, 0.0158, 0.0212, 0.0122, 0.0178
+    ],
+    'mean f1': [
+        0.9784, 0.9043, 0.9278, 0.9104, 0.8782, 0.7127
+    ],
+    'mean balanced_accuracy': [
+        0.9603, 0.8607, 0.8587, 0.8107, 0.7762, 0.5005
+    ]
+}
+matbench_jdft2d_data = {
     'algorithm': [
         'MODNet (v0.1.12)',
         'MODNet (v0.1.10)',
         'coGN',
         'AMMExpress v2020',
+        'SchNet (kgcnn v2.1.0)',
+        'ALIGNN',
+        'CrabNet',
         'Finder_v1.2 structure-based version',
         'Finder_v1.2 composition-only version',
-        'CrabNet',
-        'SchNet (kgcnn v2.1.0)',
-        'MegNet (kgcnn v2.1.0)',
         'DimeNet++ (kgcnn v2.1.0)',
-        'ALIGNN',
-        'RF-SCM/Magpie',
         'CGCNN v2019',
+        'RF-SCM/Magpie',
+        'MegNet (kgcnn v2.1.0)',
         'Dummy'
     ],
     'mean mae': [
-        0.2711,
-        0.2970,
-        0.3088,
-        0.3150,
-        0.3197,
-        0.3204,
-        0.3234,
-        0.3277,
-        0.3391,
-        0.3400,
-        0.3449,
-        0.4196,
-        0.5988,
-        0.8088
+        33.1918, 34.5368, 37.1652, 39.8497, 42.6637, 43.4244, 45.6104, 46.1339, 47.9614, 49.0243,
+        49.2440, 50.0440, 54.1719, 67.2851
     ],
     'std mae': [
-        0.0714,
-        0.0720,
-        0.0859,
-        0.0672,
-        0.0717,
-        0.0811,
-        0.0714,
-        0.0829,
-        0.0745,
-        0.0570,
-        0.0871,
-        0.0750,
-        0.0833,
-        0.0718
+        7.3428, 9.4959, 13.6825, 9.8835, 13.7201, 8.9491, 12.2491, 11.4644, 11.6680, 11.9027,
+        11.5865, 8.6271, 11.4299, 10.1832
     ],
     'mean rmse': [
-        1.6832,
-        1.7185,
-        2.0546,
-        1.7202,
-        1.7213,
-        1.7189,
-        1.7288,
-        1.8990,
-        1.9871,
-        1.9936,
-        1.9651,
-        1.8538,
-        1.8976,
-        1.9728
+        96.7332, 92.2288, 101.1580, 106.5460, 111.0187, 117.4213, 120.0088, 120.0917, 120.8819,
+        114.9349, 112.7689, 112.2660, 129.3267, 126.8446
     ],
     'max max_error': [
-        59.1179,
-        58.9519,
-        58.7728,
-        59.0112,
-        59.0606,
-        59.0528,
-        59.1583,
-        58.6071,
-        59.3095,
-        58.5416,
-        58.7285,
-        59.1201,
-        58.9996,
-        59.6653
+        1564.8245, 1534.9797, 1515.5614, 1552.9102, 1524.9143, 1519.7424, 1532.0118, 1581.4571,
+        1582.3598, 1515.0046, 1516.9120, 1538.6073, 1561.5756, 1491.7993
+    ]
+}
+matbench_gvrh_data = {
+    'algorithm': [
+        'coGN', 'ALIGNN', 'MODNet (v0.1.10)', 'MODNet (v0.1.12)', 'DimeNet++ (kgcnn v2.1.0)',
+        'SchNet (kgcnn v2.1.0)', 'MegNet (kgcnn v2.1.0)', 'AMMExpress v2020',
+        'CGCNN v2019', 'Finder_v1.2 structure-based version',
+        'Finder_v1.2 composition-only version', 'CrabNet', 'RF-SCM/Magpie', 'Dummy'
+    ],
+    'mean mae': [
+        0.0689, 0.0715, 0.0731, 0.0731, 0.0792, 0.0796, 0.0871, 0.0874, 0.0895, 0.0910,
+        0.0996, 0.1014, 0.1040, 0.2931
+    ],
+    'std mae': [
+        0.0009, 0.0006, 0.0007, 0.0007, 0.0011, 0.0022, 0.0013, 0.0020, 0.0016, 0.0018,
+        0.0018, 0.0017, 0.0016, 0.0031
+    ],
+    'mean rmse': [
+        0.1102, 0.1123, 0.1103, 0.1103, 0.1255, 0.1260, 0.1358, 0.1277, 0.1337, 0.1412,
+        0.1572, 0.1604, 0.1540, 0.3716
+    ],
+    'max max_error': [
+        1.0842, 1.1324, 1.1745, 1.1745, 1.5558, 1.1584, 1.5558, 1.1580, 1.4520, 1.4842,
+        2.3854, 2.4220, 1.6942, 1.5552
+    ]
+}
+matbench_kvrh_data = {
+    'algorithm': [
+        'coGN',
+        'MODNet (v0.1.10)',
+        'MODNet (v0.1.12)',
+        'ALIGNN',
+        'DimeNet++ (kgcnn v2.1.0)',
+        'SchNet (kgcnn v2.1.0)',
+        'AMMExpress v2020',
+        'MegNet (kgcnn v2.1.0)',
+        'Finder_v1.2 structure-based version',
+        'CGCNN v2019',
+        'CrabNet',
+        'Finder_v1.2 composition-only version',
+        'RF-SCM/Magpie',
+        'Dummy'
+    ],
+    'mean mae': [
+        0.0535, 0.0548, 0.0548, 0.0568, 0.0572, 0.0590, 0.0647, 0.0668, 0.0693, 0.0712,
+        0.0758, 0.0764, 0.0820, 0.2897
+    ],
+    'std mae': [
+        0.0028, 0.0025, 0.0025, 0.0028, 0.0032, 0.0022, 0.0015, 0.0034, 0.0035, 0.0028,
+        0.0034, 0.0025, 0.0027, 0.0043
+    ],
+    'mean rmse': [
+        0.1082, 0.1043, 0.1043, 0.1106, 0.1149, 0.1143, 0.1183, 0.1287, 0.1318, 0.1301,
+        0.1471, 0.1491, 0.1454, 0.3693
+    ],
+    'max max_error': [
+        1.6521, 1.5366, 1.5366, 1.6438, 1.7063, 1.7542, 1.4823, 1.8705, 1.6242, 1.7725,
+        1.8430, 2.3863, 1.7642, 1.8822
+    ]
+}
+matbench_e_form_data = {
+    'algorithm': [
+        'coGN', 'ALIGNN', 'SchNet (kgcnn v2.1.0)',
+        'DimeNet++ (kgcnn v2.1.0)', 'GN-OA v1', 'MegNet (kgcnn v2.1.0)', 'CGCNN v2019',
+        'Finder_v1.2 structure-based version', 'MODNet (v0.1.10)',
+        'MODNet (v0.1.12)', 'Finder_v1.2 composition-only version',
+        'CrabNet', 'RF-SCM/Magpie', 'AMMExpress v2020',
+        'Lattice-XGBoost', 'Dummy'
+    ],
+    'mean mae': [
+        0.0170, 0.0215, 0.0218, 0.0235, 0.0248, 0.0252, 0.0337, 0.0343, 0.0448, 0.0448,
+        0.0839, 0.0862, 0.1165, 0.1726, 0.7515, 1.0059
+    ],
+    'std mae': [
+        0.0003, 0.0005, 0.0004, 0.0004, 0.0002, 0.0003, 0.0006, 0.0012, 0.0039, 0.0039,
+        0.0011, 0.0010, 0.0008, 0.0270, 0.0042, 0.0030
+    ],
+    'mean rmse': [
+        0.0483, 0.0544, 0.0529, 0.0695, 0.0636, 0.0701, 0.0682, 0.1331, 0.0888, 0.0888,
+        0.2537, 0.2544, 0.2419, 0.2602, 0.9415, 1.1631
+    ],
+    'max max_error': [
+        3.8249, 3.5487, 2.9990, 3.6006, 2.4150, 3.6006, 7.7205, 45.1834, 4.8803, 4.8803,
+        6.3948, 6.3774, 5.4382, 5.8108, 4.2425, 3.9096
+    ]
+}
+matbench_mp_gap_data = {
+    'algorithm': [
+        'coGN', 'ALIGNN', 'MegNet (kgcnn v2.1.0)', 'DimeNet++ (kgcnn v2.1.0)', 'Finder_v1.2 structure-based version',
+        'MODNet (v0.1.10)', 'MODNet (v0.1.12)', 'Finder_v1.2 composition-only version',
+        'SchNet (kgcnn v2.1.0)', 'CrabNet', 'AMMExpress v2020', 'CGCNN v2019',
+        'RF-SCM/Magpie', 'Dummy'
+    ],
+    'mean mae': [
+        0.1559, 0.1861, 0.1934, 0.1993, 0.2193, 0.2199, 0.2199, 0.2308, 0.2352, 0.2655,
+        0.2824, 0.2972, 0.3452, 1.3272
+    ],
+    'std mae': [
+        0.0017, 0.0030, 0.0087, 0.0058, 0.0012, 0.0059, 0.0059, 0.0029, 0.0034, 0.0029,
+        0.0061, 0.0035, 0.0033, 0.0060
+    ],
+    'mean rmse': [
+        0.3956, 0.4635, 0.4715, 0.4720, 0.4989, 0.4525, 0.4525, 0.4837, 0.5172, 0.5898,
+        0.5611, 0.6771, 0.6125, 1.5989
+    ],
+    'max max_error': [
+        7.3352, 7.4756, 7.8821, 14.0169, 7.6676, 7.5685, 7.5685, 7.8152, 9.1171, 7.9829,
+        6.9105, 13.6569, 7.0601, 8.5092
+    ]
+}
+matbench_mp_is_metal_data = {
+    'algorithm': [
+        'CGCNN v2019', 'ALIGNN', 'coGN', 'AMMExpress v2020',
+        'MODNet (v0.1.12)', 'DimeNet++ (kgcnn v2.1.0)', 'MegNet (kgcnn v2.1.0)',
+        'RF-SCM/Magpie', 'SchNet (kgcnn v2.1.0)', 'Matformer',
+        'MODNet (v0.1.10)', 'Dummy'
+    ],
+    'mean rocauc': [
+        0.9520, 0.9128, 0.9124, 0.9093, 0.9038, 0.9032, 0.9021, 0.8992, 0.8907, 0.8117,
+        0.7805, 0.5012
+    ],
+    'std rocauc': [
+        0.0074, 0.0015, 0.0023, 0.0008, 0.0106, 0.0036, 0.0018, 0.0019, 0.0018, 0.0455,
+        0.1406, 0.0043
+    ],
+    'mean f1': [
+        0.9462, 0.9015, 0.9012, 0.8981, 0.8916, 0.8907, 0.8895, 0.8866, 0.8765, 0.7660,
+        0.6621, 0.4353
+    ],
+    'mean balanced_accuracy': [
+        0.9520, 0.9128, 0.9124, 0.9093, 0.9038, 0.9032, 0.9021, 0.8992, 0.8907, 0.8117,
+        0.7805, 0.5012
+    ]
+}
+matbench_perovskites_data = {
+    'algorithm': [
+        'coGN', 'ALIGNN', 'Finder_v1.2 structure-based version',
+        'SchNet (kgcnn v2.1.0)', 'MegNet (kgcnn v2.1.0)', 'DimeNet++ (kgcnn v2.1.0)',
+        'CGCNN v2019', 'MODNet (v0.1.10)', 'MODNet (v0.1.12)', 'AMMExpress v2020',
+        'RF-SCM/Magpie', 'CrabNet', 'Dummy', 'Finder_v1.2'
+    ],
+    'mean mae': [
+        0.0269, 0.0288, 0.0320, 0.0342, 0.0352, 0.0376, 0.0452, 0.0908, 0.0908, 0.2005,
+        0.2355, 0.4065, 0.5660, 0.6450
+    ],
+    'std mae': [
+        0.0008, 0.0009, 0.0012, 0.0005, 0.0016, 0.0011, 0.0007, 0.0028, 0.0028, 0.0085,
+        0.0034, 0.0069, 0.0048, 0.0167
+    ],
+    'mean rmse': [
+        0.0554, 0.0559, 0.0594, 0.0599, 0.0635, 0.0642, 0.0722, 0.1277, 0.1277, 0.2954,
+        0.3346, 0.5412, 0.7424, 0.8831
+    ],
+    'max max_error': [
+        0.9449, 0.9028, 0.8875, 0.8929, 1.0236, 0.9676, 0.9923, 1.1780, 1.1780, 3.3116,
+        2.8870, 2.3726, 3.6873, 3.5402
+    ]
+}
+matbench_phonons_data = {
+    'algorithm': [
+        'MegNet (kgcnn v2.1.0)', 'ALIGNN', 'coGN', 'MODNet (v0.1.12)',
+        'DimeNet++ (kgcnn v2.1.0)', 'MODNet (v0.1.10)', 'SchNet (kgcnn v2.1.0)',
+        'Finder_v1.2 composition-only version', 'Finder_v1.2 structure-based version',
+        'CrabNet', 'AMMExpress v2020', 'CGCNN v2019', 'RF-SCM/Magpie',
+        'Dummy'
+    ],
+    'mean mae': [
+        28.7606, 29.5385, 29.7117, 34.2751, 37.4619, 38.7524, 38.9636, 46.5751, 50.7406,
+        55.1114, 56.1706, 57.7635, 67.6126, 323.9822
+    ],
+    'std mae': [
+        2.5767, 2.1148, 1.9968, 2.0781, 2.1934, 1.7732, 1.9760, 3.7415, 5.4036, 5.7317,
+        6.7981, 12.3109, 8.9900, 17.7269
+    ],
+    'mean rmse': [
+        57.4679, 53.5010, 57.7099, 70.0669, 80.3047, 78.2220, 76.9279, 94.8514, 124.0783,
+        138.3775, 109.7048, 141.7018, 146.2764, 492.1533
+    ],
+    'max max_error': [
+        774.1321, 615.3466, 622.4674, 1079.1280, 1012.6802, 1031.8168, 1034.3312, 1051.2485,
+        1706.8711, 1452.7562, 1151.5570, 2504.8743, 2024.7301, 3062.3450
+    ]
+}
+matbench_steels_data = {
+    'algorithm': [
+        'AutoML-Mat', 'MODNet (v0.1.12)', 'RF-Regex Steels', 'MODNet (v0.1.10)', 'AMMExpress v2020',
+        'RF-SCM/Magpie', 'CrabNet', 'gptchem', 'Dummy'
+    ],
+    'mean mae': [
+        82.3043, 87.7627, 90.5896, 96.2139, 97.4929, 103.5125, 107.3160, 143.0028, 229.7445
+    ],
+    'std mae': [
+        8.8565, 12.2188, 6.7138, 9.8352, 13.7919, 11.0368, 18.9057, 16.9642, 9.6958
+    ],
+    'mean rmse': [
+        114.0577, 144.7722, 128.0865, 149.9535, 154.0161, 149.3839, 153.0041, 218.0282, 301.2211
+    ],
+    'max max_error': [
+        463.0130, 1121.0504, 505.2967, 931.3261, 1142.9223, 1121.1276, 576.3912, 1368.2000, 1088.0568
     ]
 }
 
 df_matbench_dielectric = pd.DataFrame(matbench_dielectric_data)
+df_matbench_expt_gap = pd.DataFrame(matbench_expt_gap_data)
+df_matbench_expt_is_metal = pd.DataFrame(matbench_expt_is_metal_data)
+df_matbench_glass = pd.DataFrame(matbench_glass_data)
+df_matbench_jdft2d = pd.DataFrame(matbench_jdft2d_data)
+df_matbench_gvrh = pd.DataFrame(matbench_gvrh_data)
+df_matbench_kvrh = pd.DataFrame(matbench_kvrh_data)
+df_matbench_e_form = pd.DataFrame(matbench_e_form_data)
+df_matbench_mp_gap = pd.DataFrame(matbench_mp_gap_data)
+df_matbench_mp_is_metal = pd.DataFrame(matbench_mp_is_metal_data)
+df_matbench_perovskites = pd.DataFrame(matbench_perovskites_data)
+df_matbench_phonons = pd.DataFrame(matbench_phonons_data)
+df_matbench_steels = pd.DataFrame(matbench_steels_data)
 df_A = pd.read_csv('cgcnn_log_kvrh.csv')
 df_B = pd.read_csv('test_results.csv')
 df_die = pd.read_csv('picture2/cgcnn_dielectric.csv')
@@ -256,16 +396,8 @@ df_gap = pd.read_csv('picture2/cgcnn_gap.csv')
 df_gvrh = pd.read_csv('picture2/cgcnn_gvrh.csv')
 df_per = pd.read_csv('picture2/cgcnn_perovskites.csv')
 df_phon = pd.read_csv('picture2/cgcnn_phonons.csv')
-
-df_C = pd.read_csv('megnet_kvrh.csv')
-df_D = pd.read_csv('megnet_dielectric.csv')
-df_E = pd.read_csv('megnet_gvrh.csv')
-df_F = pd.read_csv('megnet_phonons.csv')
-df_G = pd.read_csv('megnet_perovskites.csv')
-df_H = pd.read_csv('megnet_jdft2d.csv')
-df_I = pd.read_csv('megnet_mp_e_form.csv')
-df_J = pd.read_csv('megnet_mp_gap.csv')
 df_matbench = pd.DataFrame(matbench_data)
+
 df = pd.DataFrame({
     'Task name': ['matbench_steels', 'matbench_jdft2d', 'matbench_phonons', 'matbench_expt_gap', 'matbench_dielectric',
                   'matbench_expt_is_metal', 'matbench_glass', 'matbench_log_gvrh', 'matbench_log_kvrh',
@@ -308,7 +440,14 @@ df = pd.DataFrame({
     'Task difficulty': ['Intermediate', 'Advanced', 'Advanced', 'Intermediate', 'Intermediate', 'Beginner', 'Beginner',
                         'Advanced', 'Advanced', 'Advanced', 'Advanced', 'Beginner', 'Advanced']
 })
-
+df_C = pd.read_csv('megnet_kvrh.csv')
+df_D = pd.read_csv('megnet_dielectric.csv')
+df_E = pd.read_csv('megnet_gvrh.csv')
+df_F = pd.read_csv('megnet_phonons.csv')
+df_G = pd.read_csv('megnet_perovskites.csv')
+df_H = pd.read_csv('megnet_jdft2d.csv')
+df_I = pd.read_csv('megnet_mp_e_form.csv')
+df_J = pd.read_csv('megnet_mp_gap.csv')
 num_labels = ['<1k', '1k-10k', '10k-100k', '>=100k']
 num_values = [2, 5, 3, 3]
 num_colors = ['#7B68EE', '#6A5ACD', '#483D8B', '#2c2656']
@@ -424,8 +563,12 @@ app1.layout = html.Div(children=[
     # left
     html.Div(children=[
         html.Div([
+
             html.H1('导航', style={'color': 'white'}),
-            html.A('Matbench Dataset Visualization', href='#score', style={'color': '#FFCC99'}),
+            html.A('回到页顶', href='#top', style={'color': '#FFCC99'}),
+            html.Br(),
+            html.Br(),
+            html.A('Matbench Dataset Visualization', href='#dataset', style={'color': '#FFCC99'}),
             html.Br(),
             html.A('比赛成绩', href='#score', style={'color': '#FFCC99'}),
             html.Br(),
@@ -624,74 +767,77 @@ app1.layout = html.Div(children=[
                     children='''**GVRH**（Grain Boundary Voltage Relaxation Hysteresis）指的是晶界电压松弛滞后的能力。它是材料科学中的一个重要属性，
 特别涉及到晶界的性质和行为，如晶界电导、电子迁移和电荷储存等方面。GVRH 可能影响材料的电化学性能和电子器件的可靠性。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='phonons-description',
                     children='''**Phonons**（声子）是晶体中的一种量子态，是晶体中原子振动的一种集体激发。声子在固体中传播，可以携带能量和动量，影响
 材料的热传导和声学性质。声子的能谱与材料的晶格结构密切相关，因此研究声子可以帮助我们理解材料的热力学性质和输运行为。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='perovskites-description',
                     children='''**Perovskites**（钙钛矿）是一类具有钙钛矿晶体结构的材料，具有广泛的应用潜力。钙钛矿材料的晶体结构由一个大的阳离子（通常是
 钙离子）被八个小的阴离子（通常是氧离子）包围形成。这种结构的材料表现出多种有趣的光电性质，使其在太阳能电池、光电器件和光催化等领域
 受到广泛关注。'''
                 ),
+                html.Br(),
                 dcc.Markdown(
                     id='kvrh-description',
                     children='''**KVRH**（Kirkendall Voiding in Grain Boundaries）是指晶界中的柯肯达尔空洞形成现象。在金属材料的晶界处，
 存在不同的扩散速率，当扩散速率不平衡时，会导致空洞在晶界中形成和扩展。KVRH 现象对于金属材料的界面稳定性和失效机制具有重要意义。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='steels-description',
                     children='''**Steels**（钢材）是一类由铁和碳组成的合金材料。钢材具有优异的力学性能、可塑性和耐腐蚀性，广泛应用于建筑、桥梁、汽车、
 航空航天等领域。钢材的性能可以通过合金化、热处理和表面处理等工艺进行调控，以满足不同应用的要求。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='dielectric-description',
                     children='''**Dielectric**（介电材料）是指材料具有储存电能的能力。在电容器等应用中，储存电荷的能力对于电气性能非常重要。介电材料常常
 具有较高的电阻和较低的导电性，使其能够有效地储存电荷并阻止电流的流动。介电材料广泛应用于电子器件、电力系统和通信技术等领域。'''
                 ),
+                html.Br(),
                 dcc.Markdown(
                     id='jdft2d-description',
                     children='''**JDFT2D**（Two-Dimensional Janus Dumbbell Framework）是指二维的雅努斯哑铃结构框架。这种结构由两种不同的
 原子组成，形成了一种具有非常特殊性质的材料。JDFT2D 可以展示出多种有趣的物理和化学特性，如光电效应、磁性和拓扑特性等。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='expt_gap-description',
                     children='''**Experimental Band Gap**（实验带隙）是指通过实验测量得到的材料的能带间隙。能带间隙是固体材料中价带和导带之间的
 能量差，它对材料的导电性质和光学性质起着重要作用。实验带隙的准确测量可以帮助我们理解材料的能带结构和电子行为。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='expt_is_metal-description',
                     children='''**Experimental Is Metal**（实验判断金属）是根据实验数据对材料进行金属性质的判断。金属是一类具有良好导电性和热传导性
 的材料，其导电性来源于自由电子在晶体中的运动。通过实验测量材料的电导率、电阻率等性质，可以确定材料是否表现出金属特性。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='glass-description',
                     children='''**Glass**（玻璃）是一种非晶态的固体材料，由非晶质的结构组成。与晶体材料不同，玻璃没有长程有序的周期性结构。玻璃具有
 无定形、透明、硬度高等特点，广泛应用于建筑、容器、光学器件等领域。玻璃的性质可以通过材料成分和制备工艺进行调控，以满足各种特定的
 应用需求。'''
                 ),
+                html.Br(),
                 dcc.Markdown(
                     id='mp-gap-description',
                     children='''**Band Gap**（能隙）是指固体材料中导带和价带之间的能量间隔。能隙决定了材料的导电性和光电性质。对于半导体材料而言，
 具有较大的能隙，导带和价带之间没有电子态可用于导电，因此具有较高的电阻性质。而对于导体材料来说，能隙非常小或者没有能隙，导带和价
 带之间存在大量电子态可用于导电，因此具有良好的电导性质。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='mp-is-metal-description',
                     children='''**Metallicity**（金属性质）是指材料是否表现出金属的特性，即具有良好的电导性和热导性。金属是一类没有能隙的材料，
 其导带中存在大量自由电子，可以自由地移动和传导电荷。相比之下，非金属材料具有能隙，导带中的电子受限，电导性较差。金属性质对于电子器
 件、导线和结构材料等具有重要意义。'''
                 ),
-
+                html.Br(),
                 dcc.Markdown(
                     id='mp-e-form-description',
                     children='''**Formation Energy**（能量形成）是指材料形成过程中所涉及的能量变化。在材料科学中，通过计算和比较不同晶体结构的能量形成，
@@ -699,7 +845,9 @@ app1.layout = html.Div(children=[
                 ),
 
             ], style={'color': '#FFD700'}),
-
+            html.Br(),
+            html.Br(),
+            html.Br(),
             html.Div([
                 html.H1('Matbench 数据可视化分析', id='dataset', style={'color': '#FFE5CC'}),
                 # 描述
@@ -917,31 +1065,6 @@ app1.layout = html.Div(children=[
 
         ], style={'width': '60%', 'display': 'inline-block', 'vertical-align': 'top', 'margin-left': '20%',
                   'background-color': '#404040'}),
-
-        html.P('这是底部区域', style={'height': '300px', 'background-color': '#f2f2f2'}, ),
-        # html.Div(children=[
-        #     html.P(children='版权所有 ©2023 XYZ 公司. All rights reserved.'),
-        #     html.P(children=[
-        #         '联系我们：',
-        #         html.A('info@xyz.com', href='mailto:info@xyz.com'),
-        #         ' | ',
-        #         html.A('400-123-4567', href='tel:400-123-4567')
-        #     ]),
-        #     html.Ul(children=[
-        #         html.Li(html.A('关于我们', href='#')),
-        #         html.Li(html.A('服务条款', href='#')),
-        #         html.Li(html.A('隐私政策', href='#')),
-        #         html.Li(html.A('常见问题', href='#')),
-        #         html.Li(html.A('帮助中心', href='#'))
-        #     ]),
-        #     html.Div(children=[
-        #         html.A(html.I(className='fab fa-facebook-f'), href='#'),
-        #         html.A(html.I(className='fab fa-twitter'), href='#'),
-        #         html.A(html.I(className='fab fa-instagram'), href='#'),
-        #         html.A(html.I(className='fab fa-linkedin'), href='#'),
-        #         html.A(html.I(className='fab fa-youtube'), href='#')
-        #     ], className='social-media')
-        # ], className='container')
     ], style={'background-color': '#404040'}
 
     ),
@@ -959,7 +1082,7 @@ app2.layout = html.Div(children=[
         src='assets/index.html',
         style={'width': '1200px', 'height': '1200px', 'border': 'none'}
     )], style={'display': 'flex', 'justify-content': 'space-between', 'align-items': 'center', 'padding-top': '50px',
-               'background-color': 'black', 'padding-left': '30%'})
+               'background-color': 'black', 'padding-left': '22%'})
 
 # 创建第三个Dash应用程序的布局
 app3 = dash.Dash(__name__)
@@ -967,7 +1090,7 @@ app3.layout = html.Div(children=[
     html.Div(children=[
         html.H1('matbench排行榜', style={'color': '#FFCC99'}),
         dcc.Graph(
-            id='matbench-table',
+            id='matbench',
             figure={
                 'data': [
                     {'type': 'table',
@@ -996,7 +1119,7 @@ app3.layout = html.Div(children=[
         html.Br(),
         html.H1('matbench_deilectric的模型预测能力的排行榜', style={'color': '#FFCC99'}),
         dcc.Graph(
-            id='matbench-table',
+            id='matbench-die',
             figure={
                 'data': [
                     {'type': 'table',
@@ -1019,7 +1142,116 @@ app3.layout = html.Div(children=[
                     'backgroundColor': '#404040',  # 设置背景颜色
                 }
             }
-        )
+        ),
+        html.Br(),
+        html.H1('matbench_expt_gap的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        dcc.Graph(
+            id='matbench-expt-gap',
+            figure={
+                'data': [
+                    {'type': 'table',
+                     'header': dict(values=df_matbench_expt_gap.columns,
+                                    fill=dict(color='#808080'),
+                                    font=dict(color='#FFCC99', size=20),
+                                    line=dict(color='#FFFFFF', width=1)),  # 添加表头边框样式
+                     'cells': dict(values=df_matbench_expt_gap.transpose().values.tolist(),
+                                   fill=dict(color='#808080'),
+                                   font=dict(color='#FFFFFF', size=16),
+                                   line=dict(color='#FFFFFF', width=1),
+                                   height=30
+                                   )}  # 添加单元格边框样式
+                ],
+                'layout': {
+                    'height': '800',  # 调整表格的高度
+                    'paper_bgcolor': '#404040',  # 更改背景颜色
+                },
+                'style': {
+                    'backgroundColor': '#404040',  # 设置背景颜色
+                }
+            }
+        ),
+        html.Br(),
+        html.Br(),
+        html.H1('matbench_expt_is_metal的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        dcc.Graph(
+            id='matbench-expt-is-metal',
+            figure={
+                'data': [
+                    {'type': 'table',
+                     'header': dict(values=df_matbench_expt_is_metal.columns,
+                                    fill=dict(color='#808080'),
+                                    font=dict(color='#FFCC99', size=20),
+                                    line=dict(color='#FFFFFF', width=1)),  # 添加表头边框样式
+                     'cells': dict(values=df_matbench_expt_is_metal.transpose().values.tolist(),
+                                   fill=dict(color='#808080'),
+                                   font=dict(color='#FFFFFF', size=16),
+                                   line=dict(color='#FFFFFF', width=1),
+                                   height=30
+                                   )}  # 添加单元格边框样式
+                ],
+                'layout': {
+                    'height': '800',  # 调整表格的高度
+                    'paper_bgcolor': '#404040',  # 更改背景颜色
+                },
+                'style': {
+                    'backgroundColor': '#404040',  # 设置背景颜色
+                }
+            }
+        ),
+        html.Br(),
+        html.Br(),
+        html.H1('matbench_glass的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        dcc.Graph(
+            id='matbench-glass',
+            figure={
+                'data': [
+                    {'type': 'table',
+                     'header': dict(values=df_matbench_glass.columns,
+                                    fill=dict(color='#808080'),
+                                    font=dict(color='#FFCC99', size=20),
+                                    line=dict(color='#FFFFFF', width=1)),  # 添加表头边框样式
+                     'cells': dict(values=df_matbench_glass.transpose().values.tolist(),
+                                   fill=dict(color='#808080'),
+                                   font=dict(color='#FFFFFF', size=16),
+                                   line=dict(color='#FFFFFF', width=1),
+                                   height=30
+                                   )}  # 添加单元格边框样式
+                ],
+                'layout': {
+                    'height': '800',  # 调整表格的高度
+                    'paper_bgcolor': '#404040',  # 更改背景颜色
+                },
+                'style': {
+                    'backgroundColor': '#404040',  # 设置背景颜色
+                }
+            }
+        ),
+        html.H1('matbench_jdft2d的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        dcc.Graph(
+            id='matbench-gdft2d',
+            figure={
+                'data': [
+                    {'type': 'table',
+                     'header': dict(values=df_matbench_jdft2d.columns,
+                                    fill=dict(color='#808080'),
+                                    font=dict(color='#FFCC99', size=20),
+                                    line=dict(color='#FFFFFF', width=1)),  # 添加表头边框样式
+                     'cells': dict(values=df_matbench_jdft2d.transpose().values.tolist(),
+                                   fill=dict(color='#808080'),
+                                   font=dict(color='#FFFFFF', size=16),
+                                   line=dict(color='#FFFFFF', width=1),
+                                   height=30
+                                   )}  # 添加单元格边框样式
+                ],
+                'layout': {
+                    'height': '800',  # 调整表格的高度
+                    'paper_bgcolor': '#404040',  # 更改背景颜色
+                },
+                'style': {
+                    'backgroundColor': '#404040',  # 设置背景颜色
+                }
+            }
+        ),
 
     ], style={'background-color': '#404040', 'height': '2000px'}),
 
@@ -1034,7 +1266,8 @@ app.layout = html.Div(children=[
         html.Iframe(
             src="https://giphy.com/embed/uljidatzCuEs7yo1KV",
             style={"height": "150px", "width": "150px", "border": "none", "pointer-events": "none",
-                   "margin-left": "10%"}
+                   "margin-left": "10%"},
+            id='top'
         ),
 
         # 在页头中间添加标题
@@ -1063,7 +1296,19 @@ app.layout = html.Div(children=[
         dcc.Tab(label='元素周期表', value='app2', style={'background-color': '#808080'}),
         dcc.Tab(label='官方数据', value='app3', style={'background-color': '#808080'}),
     ]),
-    html.Div(id='page-content')
+    html.Div(id='page-content'),
+    html.Div(children=[
+        html.Br(),
+        html.P(children='版权所有 ©2023 王羽桐. All rights reserved.', style={'color': 'white'}),
+        html.Br(),
+        html.P(children=[
+            html.A('联系我们：', style={'color': 'white'}),
+            html.A('bistuwyt@163.com', style={'color': 'white'}),
+            html.A('|', style={'color': 'white'}),
+            html.A('wyt34801142@gmail.com', style={'color': 'white'})
+        ]),
+
+    ], className='container', style={'height': '300px', 'background-color': '#404040'})
 ])
 
 
