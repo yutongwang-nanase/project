@@ -1237,21 +1237,5 @@ def render_content(tab):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False, host='127.0.0.1', port=8081)
+    app.run_server(debug=False, host='123.249.2.21', port=8081)
 
-data = {'python': ['scikit-learn==1.0.1',
-                   'numpy==1.21.2',
-                   'matbench==0.6.0',
-                   'tensorflow==2.9.0',
-                   'kgcnn==2.1.1',
-                   'pandas==1.5.2'
-                   'pymatgen==2022.11.7',
-                   'networkx== 2.8.8',
-                   'torch==1.8.1+cu111'
-                   'tensorflow-addons==0.17.1'],
-        '配置信息': ['GPU==RTX 3080(10GB) * 1',
-                     'CPU==12 vCPU Intel(R) Xeon(R) Platinum 8255C CPU @ 2.50GHz',
-                     '内存==40GB',
-                     'Python==3.8(ubuntu18.04)',
-                     'Cuda==11.1']
-        }
