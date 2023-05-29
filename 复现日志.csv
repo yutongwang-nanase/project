@@ -1,0 +1,59 @@
+日期,执行人员,操作,问题
+2023/1/6,wyt,SchNet:matbench_gap,失败：killed
+2023/1/9,wyt,CGCNN：test_data,成功
+2023/1/9,wyt,CGCNN：matbench_jdft2d,失败：FileNotFoundError: [Errno 2] No such file or directory: 'data/371.cif'
+2023/1/31,wyt,DimeNet: matbench_jdft2d,失败：'module'object is not callable
+2023/1/31,wyt,DimeNet: matbench_jdft2d,"失败：TypeError: ('Keyword argument not understood:', 'hidden_channels')"
+2023/2/11,wyt,DimeNet: matbench_jdft2d,失败：ModuleNotFoundError: No module named 'torch_geometric.nn.acts'
+2023/2/16,wyt,DimeNet: matbench_jdft2d,失败：ModuleNotFoundError: No module named 'torch_geometric.nn.acts'
+2023/2/16,wyt,DimeNet: matbench_jdft2d,失败：ModuleNotFoundError: No module named 'torch_geometric.nn.acts'
+2023/3/4,wyt,DimeNet: matbench_jdft2d,部分成功，act_pred输出有问题
+2023/3/4,wyt,DimeNet: matbench_phonons,部分成功，act_pred输出有问题
+2023/3/4,wyt,DimeNet: matbench_dielectric,部分成功，act_pred输出有问题
+2023/3/4,wyt,DimeNet: matbench_log_gvrh,部分成功，act_pred输出有问题
+2023/3/5,wyt,DimeNet: matbench_log_kvrh,成功
+2023/3/6,wyt,DimeNet: matbench_jdft2d,部分成功，act_pred输出有问题
+2023/3/6,wyt,DimeNet: matbench_phonons,成功
+2023/3/6,wyt,DimeNet: matbench_dielectric,成功
+2023/3/7,wyt,DimeNet: matbench_perovskites,成功
+2023/3/7,wyt,DimeNet: matbench_log_gvrh,成功
+2023/3/7,wyt,DimeNet: matbench_log_kvrh,成功
+2023/3/8,wyt,DimeNet: matbench_mp_gap,成功
+2023/3/10,wyt,DimeNet: mat_mp_e_form,失败：RuntimeError: CUDA Error: out of memory
+2023/3/10,wyt,DimeNet: matbench_mp_is_metal,失败：ValueError: Data must be l-dimensional
+2023/3/11,wyt,MEGNet:matbench_dielectric,成功
+2023/3/11,wyt,MEGNet：gap,失败：killed
+2023/3/20,wyt,MEGNet：kvrh,成功
+2023/3/20,wyt,MEGNet：gap,失败：killed
+45006,wyt,MEGNet：e_form,失败：Graph execution error: Fail to find the dnn implementation.
+45006,wyt,MEGNet：e_form,"失败：ValueError: If using all scalar values, you must pass an index"
+45006,wyt,MEGNet：e_form,失败：SyntaxError: invalid syntax
+2023/3/25,wyt,CGCNN：jdft2d,失败：cannot import name 'cgcnnfeaturizer' from 'matminer.featurizers.structure'
+2023/3/25,wyt,CGCNN：jdft2d,成功
+2023/3/25,wyt,CGCNN：gvrh,成功
+2023/3/25,wyt,CGCNN：kvrh,成功
+2023/3/26,wyt,CGCNN：gap,成功
+2023/3/26,wyt,CGCNN：e_form,成功
+2023/3/27,wyt,CGCNN：dielectric,成功
+2023/3/27,wyt,MEGNet：gap,失败：killed
+2023/4/15,wyt,CGCNN：phonons,成功
+2023/4/15,wyt,CGCNN：perovskites,成功
+2023/4/15,wyt,MEGNet：gvrh,成功
+2023/4/15,wyt,MEGNet：perovskites,成功
+2023/4/15,wyt,MEGNet：phonons,成功
+2023/5/11,wyt,MEGNet：gap,失败：killed
+2023/5/11,wyt,MEGNet：gap,失败：killed
+2023/5/11,wyt,MEGNet：e_form,失败：RuntimeError: CUDA Error: out of memory
+2023/5/13,wyt,MEGNet：gap,成功
+2023/5/13,wyt,MEGNet：jdft2d,成功
+2023/5/13,wyt,MEGNet：e_form,失败：killed
+2023/5/14,wyt,MEGNet：is_metal,失败：killed
+2023/5/15,wyt,MEGNet：is_metal,失败：killed
+2023/5/16,wyt,MEGNet：is_metal,失败：killed
+2023/5/18,wyt,CGCNN：jdft2d,成功
+2023/5/18,wyt,CGCNN：dielectric,成功
+2023/5/18,wyt,CGCNN：is_metal,成功
+2023/5/23,wyt,MEGNet：e_form,成功
+2023/5/23,wyt,MEGNet：is_metal,成功
+2023/5/8,wyt,DimeNet: matbench_mp_is_metal,成功
+2023/5/23,wyt,DimeNet: mat_mp_e_form,成功
