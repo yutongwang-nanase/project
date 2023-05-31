@@ -111,6 +111,51 @@ df_gvrh = pd.read_csv('picture2/cgcnn_gvrh.csv')
 df_per = pd.read_csv('picture2/cgcnn_perovskites.csv')
 df_phon = pd.read_csv('picture2/cgcnn_phonons.csv')
 df_matbench = pd.DataFrame(matbench_data)
+datamodel = [
+    {
+        '模型': 'CGCNN',
+        '测试能否运行': '否',
+        '备注': '代码缺失'
+    },
+    {
+        '模型': 'MEGNet',
+        '测试能否运行': '能',
+        '备注': '需要大显存'
+    },
+    {
+        '模型': 'DimeNet',
+        '测试能否运行': '否',
+        '备注': '缺失激活函数，输出错误'
+    }
+]
+DIMENET = {
+    'python': ['scikit-learn==1.0.1', 'numpy==1.21.2', 'matbench==0.6.0', 'tensorflow==2.9.0',
+               'kgcnn==2.1.1', 'pandas==1.5.2', 'pymatgen==2022.11.7', 'networkx==2.8.8',
+               'torch==1.8.1+cu111', 'tensorflow-addons==0.17.1'],
+    '配置信息': ['GPU==RTX 3080(10GB) * 1', 'CPU==12 vCPU Intel(R) Xeon(R) Platinum 8255C CPU @ 2.50GHz', '内存==40GB',
+                 'Python==3.8(ubuntu18.04)', 'Cuda==11.1']
+}
+
+CGCNN = {
+    'python': ['kgcnn==2.1.1', 'matbench==0.6', 'matminer==0.7.4', 'matplotlib==3.4.3',
+               'networkx==2.8.8', 'numpy==1.21.2', 'plotly==5.13.1', 'pymatgen==2022.11.7',
+               'scikit-learn==1.0.1', 'tensorflow==2.11.0', 'tensorflow-addons==0.17.1', 'torch==1.8.1+cu111',
+               ],
+    '配置信息': ['GPU==RTX 3080(10GB) * 1', 'CPU==12 vCPU Intel(R) Xeon(R) Platinum 8255C CPU @ 2.50GHz',
+                 '内存==40GB', 'Python==3.8(ubuntu18.04)', 'Cuda==11.1']
+
+}
+
+MEGNET = {
+    'python': ['kgcnn==2.1.1', 'matbench==0.6', 'matminer==0.7.4', 'matplotlib==3.5.3',
+               'networkx==2.8.8', 'numpy==1.22.4', 'plotly==5.14.1', 'pymatgen==2022.11.7',
+               'scikit-learn==1.0.1', 'tensorflow==2.9.0', 'tensorflow-addons==0.17.1', 'pandas==2.0.0'
+               ],
+    '配置信息': ['GPU==RTX 3090(10GB) * 1', 'CPU==15 vCPU AMD EPYC 7642 48-Core Processor',
+                 '内存==80GB', 'Python==3.8(ubuntu20.04)', 'Cuda==11.2'
+                 ]
+
+}
 
 df = pd.DataFrame({
     'Task name': ['matbench_steels', 'matbench_jdft2d', 'matbench_phonons', 'matbench_expt_gap', 'matbench_dielectric',
@@ -291,6 +336,10 @@ app1.layout = html.Div(children=[
             html.A('Megnet 数据箱型图', href='#box', style={'color': '#FFCC99'}),
             html.Br(),
             html.A('模型性能对比', href='#Comparison', style={'color': '#FFCC99'}),
+            html.Br(),
+            html.A('项目环境配置配置', href='#modelg', style={'color': '#FFCC99'}),
+            html.Br(),
+            html.A('模型测试情况', href='#modeltest', style={'color': '#FFCC99'}),
             html.Br(),
 
         ], style={'position': 'fixed', 'width': 'auto', 'left': '4%', 'padding-top': '20px',
@@ -768,6 +817,7 @@ app1.layout = html.Div(children=[
                                  {'label': 'Official Results', 'value': 'Official Results'}],
                         value='All Models'
                     ),
+
                 ], style={'width': '50%', 'display': 'inline-block'}),
 
                 # 绘制图表
@@ -776,9 +826,100 @@ app1.layout = html.Div(children=[
                     figure=create_figure('All Models', list(data.keys())[0])
                 )
             ]),
+            html.Br(),
+            html.Br(),
+            html.Div(
+                style={'color': '#FFFFFF'},  # 设置文本颜色为白色
+                children=[
+                    html.H1('项目环境配置配置', style={'color': '#FFCC99'}, id='modelg'),
+
+                    html.H2('MEGNet'),
+                    html.Div(
+                        style={'display': 'flex'},
+                        children=[
+                            html.Div(
+                                style={'flex': '50%'},
+                                children=[
+                                    html.H2('Python库'),
+                                    html.Ul([html.Li(lib) for lib in MEGNET['python']])
+                                ]
+                            ),
+                            html.Div(
+                                style={'flex': '50%'},
+                                children=[
+                                    html.H2('配置信息'),
+                                    html.Ul([html.Li(info) for info in MEGNET['配置信息']])
+                                ]
+                            )
+                        ]
+                    ),
+
+                    html.H2('CGCNN'),
+                    html.Div(
+                        style={'display': 'flex'},
+                        children=[
+                            html.Div(
+                                style={'flex': '50%'},
+                                children=[
+                                    html.H2('Python库'),
+                                    html.Ul([html.Li(lib) for lib in CGCNN['python']])
+                                ]
+                            ),
+                            html.Div(
+                                style={'flex': '50%'},
+                                children=[
+                                    html.H2('配置信息'),
+                                    html.Ul([html.Li(info) for info in CGCNN['配置信息']])
+                                ]
+                            )
+                        ]
+                    ),
+
+                    html.H2('DimeNet'),
+                    html.Div(
+                        style={'display': 'flex'},
+                        children=[
+                            html.Div(
+                                style={'flex': '50%'},
+                                children=[
+                                    html.H2('Python库'),
+                                    html.Ul([html.Li(lib) for lib in DIMENET['python']])
+                                ]
+                            ),
+                            html.Div(
+                                style={'flex': '50%'},
+                                children=[
+                                    html.H2('配置信息'),
+                                    html.Ul([html.Li(info) for info in DIMENET['配置信息']])
+                                ]
+                            )
+                        ]
+                    )
+                ]
+            ),
+            html.Br(),
+            html.Br(),
+            html.Div(
+                children=[
+
+                    html.H1('模型测试情况', style={'color': '#FFCC99'}, id='modeltest'),
+                    dash_table.DataTable(
+                        id='table',
+                        columns=[
+                            {'name': '模型', 'id': '模型'},
+                            {'name': '测试能否运行', 'id': '测试能否运行'},
+                            {'name': '备注', 'id': '备注'}
+                        ],
+                        data=datamodel
+                    )
+                ]
+            ),
+            html.Br(),
+            html.Br(),
 
         ], style={'width': '60%', 'display': 'inline-block', 'vertical-align': 'top', 'margin-left': '20%',
                   'background-color': '#404040'}),
+
     ], style={'background-color': '#404040'}
 
     ),
@@ -796,15 +937,39 @@ app2.layout = html.Div(children=[
         src='assets/index.html',
         style={'width': '1200px', 'height': '1200px', 'border': 'none'}
     )], style={'display': 'flex', 'justify-content': 'space-between', 'align-items': 'center', 'padding-top': '50px',
-               'background-color': 'black', 'padding-left': '18%'})
+               'background-color': 'black', 'padding-left': '16%'})
 
 # 创建第三个Dash应用程序的布局
 app3 = dash.Dash(__name__)
 app3.layout = html.Div(children=[
+    html.Div([
+
+        html.H1('导航', style={'color': 'white'}),
+        html.A('回到页顶', href='#top', style={'color': '#FFCC99'}),
+        html.Br(),
+        html.Br(),
+        html.A('matbench排行榜', href='#matbench', style={'color': '#FFCC99'}),
+        html.Br(),
+        html.A('matbench_deilectric排行榜', href='#matbench-die', style={'color': '#FFCC99'}),
+        html.Br(),
+        html.A('matbench_expt_gap排行榜', href='#matbench-expt-gap', style={'color': '#FFCC99'}),
+        html.Br(),
+        html.A('matbench_expt_is_metal排行榜', href='matbench-expt-is-metal', style={'color': '#FFCC99'}),
+        html.Br(),
+        html.A('matbench_glass排行榜', href='#matbench-glass', style={'color': '#FFCC99'}),
+        html.Br(),
+        html.A('matbench_jdft2d排行榜', href='#matbench-jdft2d', style={'color': '#FFCC99'}),
+        html.Br(),
+        html.A('matbench_gvrh排行榜', href='#matbench-gvrh', style={'color': '#FFCC99'}),
+        html.Br(),
+
+    ], style={'position': 'fixed', 'width': 'auto', 'left': '4%', 'padding-top': '20px',
+              'background-color': '#404040'}),
     html.Div(children=[
-        html.H1('matbench排行榜', style={'color': '#FFCC99'}),
+
+        html.H1('matbench排行榜', style={'color': '#FFCC99'}, id='matbench'),
         dcc.Graph(
-            id='matbench',
+
             figure={
                 'data': [
                     {'type': 'table',
@@ -831,9 +996,9 @@ app3.layout = html.Div(children=[
             }
         ),
         html.Br(),
-        html.H1('matbench_deilectric的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        html.H1('matbench_deilectric的模型预测能力的排行榜', id='matbench-die', style={'color': '#FFCC99'}),
         dcc.Graph(
-            id='matbench-die',
+
             figure={
                 'data': [
                     {'type': 'table',
@@ -849,7 +1014,7 @@ app3.layout = html.Div(children=[
                                    )}  # 添加单元格边框样式
                 ],
                 'layout': {
-                    'height': '800',  # 调整表格的高度
+                    'height': '700',  # 调整表格的高度
                     'paper_bgcolor': '#404040',  # 更改背景颜色
                 },
                 'style': {
@@ -858,9 +1023,9 @@ app3.layout = html.Div(children=[
             }
         ),
         html.Br(),
-        html.H1('matbench_expt_gap的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        html.H1('matbench_expt_gap的模型预测能力的排行榜', id='matbench-expt-gap', style={'color': '#FFCC99'}),
         dcc.Graph(
-            id='matbench-expt-gap',
+
             figure={
                 'data': [
                     {'type': 'table',
@@ -876,7 +1041,7 @@ app3.layout = html.Div(children=[
                                    )}  # 添加单元格边框样式
                 ],
                 'layout': {
-                    'height': '800',  # 调整表格的高度
+                    'height': '600',  # 调整表格的高度
                     'paper_bgcolor': '#404040',  # 更改背景颜色
                 },
                 'style': {
@@ -885,10 +1050,10 @@ app3.layout = html.Div(children=[
             }
         ),
         html.Br(),
-        html.Br(),
-        html.H1('matbench_expt_is_metal的模型预测能力的排行榜', style={'color': '#FFCC99', 'paper_bgcolor': '#404040'}),
+        html.H1('matbench_expt_is_metal的模型预测能力的排行榜', id='matbench-expt-is-metal',
+                style={'color': '#FFCC99', 'paper_bgcolor': '#404040'}),
         dcc.Graph(
-            id='matbench-expt-is-metal',
+
             figure={
                 'data': [
                     {'type': 'table',
@@ -904,7 +1069,7 @@ app3.layout = html.Div(children=[
                                    )}  # 添加单元格边框样式
                 ],
                 'layout': {
-                    'height': '800',  # 调整表格的高度
+                    'height': '600',  # 调整表格的高度
                     'paper_bgcolor': '#404040',  # 更改背景颜色
                 },
                 'style': {
@@ -913,10 +1078,9 @@ app3.layout = html.Div(children=[
             }
         ),
         html.Br(),
-        html.Br(),
-        html.H1('matbench_glass的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        html.H1('matbench_glass的模型预测能力的排行榜', id='matbench-glass', style={'color': '#FFCC99'}),
         dcc.Graph(
-            id='matbench-glass',
+
             figure={
                 'data': [
                     {'type': 'table',
@@ -932,7 +1096,7 @@ app3.layout = html.Div(children=[
                                    )}  # 添加单元格边框样式
                 ],
                 'layout': {
-                    'height': '800',  # 调整表格的高度
+                    'height': '400',  # 调整表格的高度
                     'paper_bgcolor': '#404040',  # 更改背景颜色
                 },
                 'style': {
@@ -940,9 +1104,9 @@ app3.layout = html.Div(children=[
                 }
             }
         ),
-        html.H1('matbench_jdft2d的模型预测能力的排行榜', style={'color': '#FFCC99'}),
+        html.H1('matbench_jdft2d的模型预测能力的排行榜', id='matbench-jdft2d', style={'color': '#FFCC99'}),
         dcc.Graph(
-            id='matbench-gdft2d',
+
             figure={
                 'data': [
                     {'type': 'table',
@@ -966,8 +1130,61 @@ app3.layout = html.Div(children=[
                 }
             }
         ),
+        html.H1('matbench_gvrh的模型预测能力的排行榜', id='matbench-gvrh', style={'color': '#FFCC99'}),
+        dcc.Graph(
 
-    ], style={'height': '2000px', 'backgroundColor': '#404040'}),
+            figure={
+                'data': [
+                    {'type': 'table',
+                     'header': dict(values=df_matbench_gvrh.columns,
+                                    fill=dict(color='#808080'),
+                                    font=dict(color='#FFCC99', size=20),
+                                    line=dict(color='#FFFFFF', width=1)),  # 添加表头边框样式
+                     'cells': dict(values=df_matbench_gvrh.transpose().values.tolist(),
+                                   fill=dict(color='#808080'),
+                                   font=dict(color='#FFFFFF', size=16),
+                                   line=dict(color='#FFFFFF', width=1),
+                                   height=30
+                                   )}  # 添加单元格边框样式
+                ],
+                'layout': {
+                    'height': '800',  # 调整表格的高度
+                    'paper_bgcolor': '#404040',  # 更改背景颜色
+                },
+                'style': {
+                    'backgroundColor': '#404040',  # 设置背景颜色
+                }
+            }
+        ),
+        # html.H1('matbench_kvrh的模型预测能力的排行榜',id='matbench-kvrh', style={'color': '#FFCC99'}),
+        # dcc.Graph(
+        #
+        #     figure={
+        #         'data': [
+        #             {'type': 'table',
+        #              'header': dict(values=df_matbench_kvrh.columns,
+        #                             fill=dict(color='#808080'),
+        #                             font=dict(color='#FFCC99', size=20),
+        #                             line=dict(color='#FFFFFF', width=1)),  # 添加表头边框样式
+        #              'cells': dict(values=df_matbench_kvrh.transpose().values.tolist(),
+        #                            fill=dict(color='#808080'),
+        #                            font=dict(color='#FFFFFF', size=16),
+        #                            line=dict(color='#FFFFFF', width=1),
+        #                            height=30
+        #                            )}  # 添加单元格边框样式
+        #         ],
+        #         'layout': {
+        #             'height': '800',  # 调整表格的高度
+        #             'paper_bgcolor': '#404040',  # 更改背景颜色
+        #         },
+        #         'style': {
+        #             'backgroundColor': '#404040',  # 设置背景颜色
+        #         }
+        #     }
+        # ),
+
+    ], style={'height': '5500px', 'width': '80%', 'backgroundColor': '#404040',
+              'margin-left': '20%'}),
 
     # App 3的其他组件
 ])
@@ -1237,5 +1454,4 @@ def render_content(tab):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False, host='123.249.2.21', port=8081)
-
+    app.run_server(debug=False, host='127.0.0.1', port=8082)
